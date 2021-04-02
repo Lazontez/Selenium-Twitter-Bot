@@ -10,13 +10,13 @@ const signInData = {
 }
 // Twitter Does Not Let You Post A Message That Contains THE SAME VALUE AS SOMETHING YOU HAVE PREVIOUSLY POSTED
 const details = {
-    'message': 'yamaha'
+    'message': 'yamae8r8fha'
 }
 // NPM SELENIUM-WEBDRIVER OPTION SETTINS
-const options = new chrome.Options({ args: ['--window-size=1280,800', '--auto-open-devtools-for-tabs'] })
+const options = new chrome.Options({ args: ['--window-size=1280,800', '--auto-open-devtools-for-tabs',] })
 
 // SETTING UP MEMORY FOR WEBDRIVERS PROXY *OPTIONAL(NOT NEEDED FOR CURRENT FUNCTIONALITY OF SCRIPT)
-// const proxy = require("selenium-webdriver/proxy");
+const proxy = require("selenium-webdriver/proxy");
 
 
 // FUNCTION TO SIGN IN TO TWITTER - TAKE A PARAM THAT EXPECTS WEB DRIVER INSTANCE TO BE PASSED THROUGH IT
@@ -24,18 +24,23 @@ signInTwitter = (driver) => {
 
     // WAITS UNTIL 'USERNAME' INPUT FIELD IS FOUND
     driver.wait(until.elementLocated(By.name("session[username_or_email]"))).then(res => {
+        console.log('Here')
         try {
-            console.log("Starting to fill out log-in page")
-            driver.findElement(By.name("session[username_or_email]")).sendKeys(signInData.username)
+
+            console.log("Starting attempt at filling out sign up page")
+            driver.findElement(By.name("session[username_or_email]")).sendKeys(signInData.username).then(response => {
+                console.log(response)
+            })
             driver.findElement(By.name("session[password]")).sendKeys(signInData.password)
+            driver.sleep('10')
             driver.findElement(By.xpath('/html/body/div/div/div/div[2]/main/div/div/div[2]/form/div/div[3]/div')).sendKeys(Key.ENTER)
         }
-    // **NEED TO ADD CATCH VALIDATIONS
+        // **NEED TO ADD CATCH VALIDATIONS
         catch {
             console.log('Caught an error')
         }
         finally {
-            console.log('Done')
+            console.log(5)
         }
 
     })
@@ -57,12 +62,16 @@ makePost = (driver) => {
             driver.wait(until.elementLocated(By.xpath(xPathOfPostBtn))).then(response => {
                 console.log('Post button has been found')
                 driver.findElement(By.xpath(xPathOfPostBtn)).sendKeys(Key.ENTER).then(res => {
-                    console.log('Post has been made')
+
+
+                    // Check if the page has succefully submitted the page by looking to see which elements have been populated
+                    // If page does not display any error message console log that the post has been made if it does display error read what the error says and attempt to
+
                 })
-            // NEED TO ADD MORE CATCH VALIDATIONS
-                .catch(err=>{
-                    console.log("Something went wrong when posting")
-                })
+                    // NEED TO ADD MORE CATCH VALIDATIONS
+                    .catch(err => {
+                        console.log("Something went wrong when posting")
+                    })
             })
         }
         catch {
@@ -81,7 +90,9 @@ async function postToTwitter() {
 
     const driver = new Builder()
         .setChromeOptions({ options: options })
+        .setProxy(proxy.manual({ http: '206.189.145.178:8080' }))
         .forBrowser("chrome").build();
+
 
     await driver.get("https://twitter.com/login");
 
