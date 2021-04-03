@@ -10,7 +10,7 @@ const signInData = {
 }
 // Twitter Does Not Let You Post A Message That Contains THE SAME VALUE AS SOMETHING YOU HAVE PREVIOUSLY POSTED
 const details = {
-    'message': 'yamae8r8fha'
+    'message': 'Twitter Let Me Post Please Jba Hajnd JJdhd'
 }
 // NPM SELENIUM-WEBDRIVER OPTION SETTINS
 const options = new chrome.Options({ args: ['--window-size=1280,800', '--auto-open-devtools-for-tabs',] })
@@ -61,21 +61,13 @@ makePost = (driver) => {
             // WAITS UNTIL THE POST BUTTON IS FOUND(MEANING IT IS ENABLE) AND CLICKS BUTTON
             driver.wait(until.elementLocated(By.xpath(xPathOfPostBtn))).then(response => {
                 console.log('Post button has been found')
-                driver.findElement(By.xpath(xPathOfPostBtn)).sendKeys(Key.ENTER).then(res => {
+                driver.findElement(By.xpath(xPathOfPostBtn)).sendKeys(Key.ENTER).then((res, element) => {
 
 
-                    // Check if the page has succefully submitted the page by looking to see which elements have been populated
-                    // If page does not display any error message console log that the post has been made if it does display error read what the error says and attempt to
-
+                }).catch(err =>{
+                    console.log("There was an error found when attempting to click post button")
                 })
-                    // NEED TO ADD MORE CATCH VALIDATIONS
-                    .catch(err => {
-                        console.log("Something went wrong when posting")
-                    })
             })
-        }
-        catch {
-            console.log('Something went wrong')
         }
         finally {
             console.log('Finally')
