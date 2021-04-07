@@ -40,7 +40,7 @@ signInTwitter = (driver) => {
             console.log('Caught an error')
         }
         finally {
-            console.log(5)
+            
         }
 
     })
