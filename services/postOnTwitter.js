@@ -22,6 +22,7 @@ const proxy = require("selenium-webdriver/proxy");
 // FUNCTION TO SIGN IN TO TWITTER - TAKE A PARAM THAT EXPECTS WEB DRIVER INSTANCE TO BE PASSED THROUGH IT
 signInTwitter = (driver) => {
 
+    
     // WAITS UNTIL 'USERNAME' INPUT FIELD IS FOUND
     driver.wait(until.elementLocated(By.name("session[username_or_email]"))).then(res => {
         console.log('Here')
